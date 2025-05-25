@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import NavBar from "../Shared/NavBar";
 import Lottie from "lottie-react";
 import registerAnimation from "./../../assets/Lottes/register-animaton.json";
+import AuthContext from "../../Context/AuthContext";
+import {
+  sweetErrorMessage,
+  sweetSuccessMessage,
+} from "../../Utilities/sweetAlertFN";
 
 const Register = () => {
+  const { registerUser } = useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -12,6 +18,16 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(name, email, photoUrl, password);
+    registerUser(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        sweetSuccessMessage("User Register Successful");
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        sweetErrorMessage(errorMessage);
+      });
   };
   return (
     <div>
