@@ -5,6 +5,8 @@ export const sweetSuccessMessage = (message) => {
     title: `${message}`,
     icon: "success",
     draggable: true,
+    showConfirmButton: false,
+    timer: 1500,
   });
 };
 

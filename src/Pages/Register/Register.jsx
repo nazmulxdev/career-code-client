@@ -7,9 +7,11 @@ import {
   sweetErrorMessage,
   sweetSuccessMessage,
 } from "../../Utilities/sweetAlertFN";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../../Firebase/fireBase.init";
 
 const Register = () => {
-  const { registerUser } = useContext(AuthContext);
+  const { registerUser, setCurrentUser } = useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -17,12 +19,18 @@ const Register = () => {
     const photoUrl = form.photoUrl.value;
     const email = form.email.value;
     const password = form.password.value;
+    const updateUser = {
+      displayName: name,
+      photoURL: photoUrl,
+    };
     console.log(name, email, photoUrl, password);
     registerUser(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
-        sweetSuccessMessage("User Register Successful");
+        updateProfile(auth.currentUser, updateUser).then(() => {
+          sweetSuccessMessage("User Register Successful");
+          console.log(user);
+        });
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -36,7 +44,7 @@ const Register = () => {
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
             <Lottie
-              style={{ width: "200px" }}
+              style={{ width: "30rem" }}
               animationData={registerAnimation}
               loop={true}
             ></Lottie>
