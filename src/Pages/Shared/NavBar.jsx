@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
+import AuthContext from "../../Context/AuthContext";
+import {
+  sweetErrorMessage,
+  sweetSuccessMessage,
+} from "../../Utilities/sweetAlertFN";
 
 const NavBar = () => {
+  const { currentUser, signOutUser, setLoading } = useContext(AuthContext);
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        setLoading(false);
+        sweetSuccessMessage("You have successFully log out");
+      })
+      .catch((error) => {
+        const errorMessage = error.massage;
+        sweetErrorMessage(errorMessage);
+      });
+  };
   const links = (
     <>
       <li>
@@ -62,7 +79,15 @@ const NavBar = () => {
       <div className="navbar-center hidden md:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end space-x-2">{logInRegister}</div>
+      <div className="navbar-end space-x-2">
+        {currentUser ? (
+          <button onClick={handleSignOut} className="btn btn-primary">
+            Sign Out
+          </button>
+        ) : (
+          logInRegister
+        )}
+      </div>
     </div>
   );
 };

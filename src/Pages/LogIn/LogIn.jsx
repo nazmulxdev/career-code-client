@@ -9,7 +9,7 @@ import NavBar from "../Shared/NavBar";
 import Lottie from "lottie-react";
 
 const LogIn = () => {
-  const { logInUser } = useContext(AuthContext);
+  const { logInUser, setLoading, setCurrentUser } = useContext(AuthContext);
   const handleLogIn = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -20,8 +20,9 @@ const LogIn = () => {
     logInUser(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        setLoading(false);
+        setCurrentUser(user);
         sweetSuccessMessage("You have log in Successfully");
-        console.log(user);
       })
       .catch((error) => {
         const errorMessage = error.message;

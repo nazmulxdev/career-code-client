@@ -28,8 +28,8 @@ const Register = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         updateProfile(auth.currentUser, updateUser).then(() => {
+          setCurrentUser(user);
           sweetSuccessMessage("User Register Successful");
-          console.log(user);
         });
       })
       .catch((error) => {
