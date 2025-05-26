@@ -1,11 +1,11 @@
 import React from "react";
 import LoadingSpinner from "../../Components/LoadingSpinner";
+import Banner from "./Banner";
 
 const Home = () => {
   return (
     <div>
-      <LoadingSpinner></LoadingSpinner>
-      <p>this is home page</p>
+      <Banner></Banner>
     </div>
   );
 };
