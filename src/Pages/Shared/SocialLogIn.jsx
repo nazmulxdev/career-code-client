@@ -17,6 +17,7 @@ const SocialLogIn = () => {
         sweetErrorMessage(error.message);
       });
   };
+  
   return (
     <div>
       <div className="divider">OR</div>
