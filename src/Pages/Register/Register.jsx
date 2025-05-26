@@ -9,6 +9,7 @@ import {
 } from "../../Utilities/sweetAlertFN";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../Firebase/fireBase.init";
+import SocialLogIn from "../Shared/SocialLogIn";
 
 const Register = () => {
   const { registerUser, setCurrentUser } = useContext(AuthContext);
@@ -88,6 +89,7 @@ const Register = () => {
                   Register
                 </button>
               </form>
+              <SocialLogIn></SocialLogIn>
             </div>
           </div>
         </div>

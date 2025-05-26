@@ -7,6 +7,7 @@ import {
 import AuthContext from "../../Context/AuthContext";
 import NavBar from "../Shared/NavBar";
 import Lottie from "lottie-react";
+import SocialLogIn from "../Shared/SocialLogIn";
 
 const LogIn = () => {
   const { logInUser, setLoading, setCurrentUser } = useContext(AuthContext);
@@ -44,6 +45,7 @@ const LogIn = () => {
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <h1 className="text-5xl font-bold">LogIn now!</h1>
+
               <form className="fieldset" onSubmit={handleLogIn}>
                 <label className="label">Email</label>
                 <input
@@ -66,6 +68,7 @@ const LogIn = () => {
                   LogIn
                 </button>
               </form>
+              <SocialLogIn></SocialLogIn>
             </div>
           </div>
         </div>
