@@ -1,9 +1,61 @@
 import React from "react";
+import { Link, useParams } from "react-router";
+import AuthContext from "../../Context/AuthContext";
+import UseAuth from "../../Hooks/UseAuth";
 
 const JobApply = () => {
+  const { id: jobId } = useParams();
+  const { currentUser } = UseAuth();
+  console.log(jobId);
+  console.log(currentUser);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const linkedIn = form.linkedIn.value;
+    const gitHub = form.gitHub.value;
+    const resume = form.resume.value;
+    console.log(linkedIn, gitHub, resume);
+  };
   return (
     <div>
-      <p>apply for job opportunity</p>
+      <p className="text-4xl font-bold text-center">
+        Apply for this job :
+        <Link className="text-green-600" to={`/jobs/${jobId}`}>
+          Details
+        </Link>
+      </p>
+      <form onSubmit={handleFormSubmit} className="max-w-lg mx-auto">
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4">
+          <label className="label">LinkedIn Link</label>
+          <input
+            type="url"
+            name="linkedIn"
+            className="input w-full"
+            placeholder="Your linkedin profile link"
+          />
+
+          <label className="label">GitHub Link</label>
+          <input
+            type="url"
+            name="gitHub"
+            className="input w-full"
+            placeholder="Your github link"
+          />
+
+          <label className="label">Resume Link</label>
+          <input
+            type="url"
+            className="input w-full"
+            name="resume"
+            placeholder="Your resume link"
+          />
+          <input
+            type="submit"
+            className="btn w-full mt-2"
+            value="Apply"
+          ></input>
+        </fieldset>
+      </form>
     </div>
   );
 };
