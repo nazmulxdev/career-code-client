@@ -4,20 +4,25 @@ import {
   sweetErrorMessage,
   sweetSuccessMessage,
 } from "../../Utilities/sweetAlertFN";
+import { useNavigate } from "react-router";
 
-const SocialLogIn = () => {
+const SocialLogIn = ({ from }) => {
   const { googleSignIn, setCurrentUser } = useContext(AuthContext);
+  console.log(from);
+  const navigate = useNavigate();
   const handleGoogleLogIn = () => {
     googleSignIn()
       .then((result) => {
         setCurrentUser(result.user);
-        sweetSuccessMessage("You have log in successFully");
+        sweetSuccessMessage("You have log in successFully").then(() => {
+          navigate(from || "/");
+        });
       })
       .catch((error) => {
         sweetErrorMessage(error.message);
       });
   };
-  
+
   return (
     <div>
       <div className="divider">OR</div>

@@ -6,6 +6,8 @@ import Register from "../Pages/Register/Register";
 import LogIn from "../Pages/LogIn/LogIn";
 import JobDetails from "../Pages/JobDetails/JobDetails";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import PrivateRoutes from "../Routes/Private/PrivateRoutes";
+import JobApply from "../Pages/JobApply/JobApply";
 
 const Router = createBrowserRouter([
   {
@@ -19,6 +21,18 @@ const Router = createBrowserRouter([
       {
         path: "/jobs/:id",
         Component: JobDetails,
+        loader: ({ params }) => {
+          return fetch(`http://localhost:3000/jobs/${params.id}`);
+        },
+        hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
+      },
+      {
+        path: "/apply/:id",
+        element: (
+          <PrivateRoutes>
+            <JobApply></JobApply>
+          </PrivateRoutes>
+        ),
         loader: ({ params }) => {
           return fetch(`http://localhost:3000/jobs/${params.id}`);
         },

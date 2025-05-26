@@ -8,9 +8,13 @@ import AuthContext from "../../Context/AuthContext";
 import NavBar from "../Shared/NavBar";
 import Lottie from "lottie-react";
 import SocialLogIn from "../Shared/SocialLogIn";
+import { useLocation, useNavigate } from "react-router";
 
 const LogIn = () => {
   const { logInUser, setLoading, setCurrentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state || "/";
   const handleLogIn = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -23,7 +27,9 @@ const LogIn = () => {
         const user = userCredential.user;
         setLoading(false);
         setCurrentUser(user);
-        sweetSuccessMessage("You have log in Successfully");
+        sweetSuccessMessage("You have log in Successfully").then(() => {
+          navigate(from);
+        });
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -68,7 +74,7 @@ const LogIn = () => {
                   LogIn
                 </button>
               </form>
-              <SocialLogIn></SocialLogIn>
+              <SocialLogIn from={from}></SocialLogIn>
             </div>
           </div>
         </div>

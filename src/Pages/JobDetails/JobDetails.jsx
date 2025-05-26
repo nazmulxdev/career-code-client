@@ -2,11 +2,12 @@ import React from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { MdWorkOutline, MdOutlineDateRange, MdEmail } from "react-icons/md";
 import { FaMoneyBillWave, FaUserTie } from "react-icons/fa";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 const JobDetails = () => {
   const job = useLoaderData();
   const {
+    _id,
     title,
     company,
     company_logo,
@@ -116,7 +117,9 @@ const JobDetails = () => {
 
       {/* Apply Button */}
       <div className="text-center mt-6">
-        <button className="btn btn-primary">Apply Now</button>
+        <Link to={`/apply/${_id}`}>
+          <button className="btn btn-primary">Apply Now</button>
+        </Link>
       </div>
     </div>
   );
