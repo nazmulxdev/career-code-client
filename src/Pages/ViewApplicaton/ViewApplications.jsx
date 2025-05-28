@@ -1,11 +1,30 @@
+import axios from "axios";
 import React from "react";
 import { useLoaderData, useParams } from "react-router";
+import {
+  sweetErrorMessage,
+  sweetSuccessMessage,
+} from "../../Utilities/sweetAlertFN";
 
 const ViewApplications = () => {
   const { id } = useParams();
   const applications = useLoaderData();
-  console.log(applications);
-  console.log(id);
+  const handleStatusChange = (event, application) => {
+    console.log(event.target.value, application);
+
+    axios
+      .patch(`http://localhost:3000/applications/${application}`, {
+        status: event.target.value,
+      })
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          sweetSuccessMessage("Status Update successful");
+        }
+      })
+      .catch((error) => {
+        sweetErrorMessage(error);
+      });
+  };
   return (
     <div>
       <p>
@@ -25,13 +44,29 @@ const ViewApplications = () => {
             </tr>
           </thead>
           <tbody>
-            {applications.map((applied, index) => (
+            {applications.map((application, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
-                <td>{applied.applicantEmail}</td>
-                <td>{applied.linkedIn}</td>
-                <td>{applied.gitHub}</td>
-                <td>{applied.resume}</td>
+                <td>{application.applicantEmail}</td>
+                <td>{application.linkedIn}</td>
+                <td>{application.gitHub}</td>
+                <td>{application.resume}</td>
+                <td>
+                  <select
+                    defaultValue={application.status}
+                    onChange={(event) =>
+                      handleStatusChange(event, application._id)
+                    }
+                    name="status"
+                    className="select"
+                  >
+                    <option disabled={true}>Update Status</option>
+                    <option>Pending</option>
+                    <option>Interview</option>
+                    <option>Hired</option>
+                    <option>Rejected</option>
+                  </select>
+                </td>
               </tr>
             ))}
           </tbody>

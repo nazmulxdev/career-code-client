@@ -15,6 +15,6 @@ const MyPostedJobs = () => {
       </Suspense>
     </div>
   );
-};
+}; 
 
 export default MyPostedJobs;
