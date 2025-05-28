@@ -1,11 +1,14 @@
 import React from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import AuthContext from "../../Context/AuthContext";
 import UseAuth from "../../Hooks/UseAuth";
+import axios from "axios";
+import { sweetSuccessMessage } from "../../Utilities/sweetAlertFN";
 
 const JobApply = () => {
   const { id: jobId } = useParams();
   const { currentUser } = UseAuth();
+  const navigate = useNavigate();
   console.log(jobId);
   console.log(currentUser);
   const handleFormSubmit = (e) => {
@@ -14,7 +17,30 @@ const JobApply = () => {
     const linkedIn = form.linkedIn.value;
     const gitHub = form.gitHub.value;
     const resume = form.resume.value;
-    console.log(linkedIn, gitHub, resume);
+    const userId = currentUser.uid;
+    const application = {
+      jobId,
+      applicantEmail: currentUser.email,
+      applicantUID: userId,
+      linkedIn,
+      gitHub,
+      resume,
+    };
+
+    axios
+      .post("http://localhost:3000/applications", application)
+      .then((res) => {
+        if (res.data.insertedId) {
+          sweetSuccessMessage("Application has been submitted successful").then(
+            () => {
+              navigate("/myApplications");
+            }
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div>
