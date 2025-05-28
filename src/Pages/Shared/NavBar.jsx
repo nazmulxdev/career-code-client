@@ -34,9 +34,14 @@ const NavBar = () => {
       {/* fro recruiter, check role as well */}
 
       {currentUser && (
-        <li>
-          <NavLink to="/addJob">AddJob</NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink to="/addJob">AddJob</NavLink>
+          </li>
+          <li>
+            <NavLink to="/myPostedJobs">My posted Jobs</NavLink>
+          </li>
+        </>
       )}
 
       <li>
